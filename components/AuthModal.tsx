@@ -42,7 +42,7 @@ const AuthModal: FC<AuthModalProps> = ({}) => {
     >
       <Auth
         theme="dark"
-        providers={["github"]}
+        providers={[]}
         magicLink
         supabaseClient={supabaseClient}
         appearance={{

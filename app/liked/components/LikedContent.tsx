@@ -3,35 +3,46 @@
 import LikedButton from "@/components/LikedButton";
 import MediaItem from "@/components/MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
+import { useUser } from "@/hooks/useUser";
 import { Song } from "@/types";
-import type { FC } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, type FC } from "react";
 
-interface SearchContentProps {
+interface LikedContentProps {
   songs: Song[];
 }
 
-const SearchContent: FC<SearchContentProps> = ({ songs }) => {
+const LikedContent: FC<LikedContentProps> = ({ songs }) => {
+  const router = useRouter();
+  const { isLoading, user } = useUser();
+
   const onPlay = useOnPlay(songs);
 
-  if (songs.length === 0)
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace("/");
+    }
+  }, [isLoading, user, router]);
+
+  if (songs.length === 0) {
     return (
       <div className="flex w-full flex-col gap-y-2 px-6 text-neutral-400">
-        No songs found.
+        No liked songs.
       </div>
     );
+  }
+
   return (
-    <div className="flex w-full flex-col gap-y-2 px-6">
+    <div className="flex w-full flex-col gap-y-2 p-6">
       {songs.map((song) => (
         <div key={song.id} className="flex w-full items-center gap-x-4">
           <div className="flex-1">
             <MediaItem onClick={(id: string) => onPlay(id)} data={song} />
           </div>
-          <LikedButton songId={song?.id} />
+          <LikedButton songId={song.id} />
         </div>
-
-        // TODO: add like button here
       ))}
     </div>
   );
 };
-export default SearchContent;
+export default LikedContent;

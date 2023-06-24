@@ -7,10 +7,15 @@ import type { FC } from "react";
 
 interface MediaItemProps {
   data: Song;
-  onClick: (id: string) => void;
+  onClick?: (id: string) => void;
+  isTruncate?: boolean;
 }
 
-const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
+const MediaItem: FC<MediaItemProps> = ({
+  data,
+  onClick,
+  isTruncate = false,
+}) => {
   const imageUrl = useLoadImage(data);
   const handleClick = () => {
     if (onClick) {
@@ -35,7 +40,9 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
 
       <div className="flex flex-col gap-y-1 overflow-hidden">
         <p className="truncate text-white">{data.title}</p>
-        <p className="truncate text-sm text-neutral-400">{data.author}</p>
+        <p className="text-sm text-neutral-400">
+          {isTruncate ? `${data.author.substring(0, 10)}...` : data.author}
+        </p>
       </div>
     </div>
   );

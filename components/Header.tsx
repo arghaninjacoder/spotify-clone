@@ -62,10 +62,18 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
 
         <div className="flex items-center gap-x-2 md:hidden">
           <button className="flex items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75">
-            <HiHome className="text-black" size={20} />
+            <HiHome
+              className="text-black"
+              size={20}
+              onClick={() => router.push("/")}
+            />
           </button>
           <button className="flex items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75">
-            <BiSearch className="text-black" size={20} />
+            <BiSearch
+              className="text-black"
+              size={20}
+              onClick={() => router.push("/search")}
+            />
           </button>
         </div>
 
@@ -75,12 +83,12 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
               <Button onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => router.push("/account")}
                 className="bg-white"
               >
                 <FaUserAlt />
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <>
